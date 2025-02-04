@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+* {
+  font-family: "Poppins", serif;
+}
+
+@theme {
+  --color-primary: #58c8af;
+  --color-secondary: #297c68;
+}
+
+.outline-text {
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: black;
+}
+
+.outline-text.outline-white {
+  -webkit-text-stroke-color: #fff !important;
+}

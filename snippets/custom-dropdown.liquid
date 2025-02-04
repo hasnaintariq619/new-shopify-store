@@ -1,0 +1,66 @@
+{% comment %}
+  Snippet: Custom Dropdown
+  Usage: {% render 'custom-dropdown', name: 'country', label: 'Select a country', options: settings.countries, error: form.errors.country %}
+{% endcomment %}
+
+{% assign option_lists = options | split: '|' %}
+<div class="relative w-full dropdown">
+  <!-- Button for dropdown -->
+  <button
+    type="button"
+    class="dropdown-toggle cursor-pointer w-full p-4 text-left text-white bg-white/20 border {% if error %} border-red-500 {% else %} border-gray-300 {% endif %} rounded-md outline-none transition-all hover:border-white focus:border-white flex justify-between items-center"
+  >
+    <span>{{ selected_value | default: label }}</span>
+    <img src="{{ 'chevron-down.svg' | asset_url }}" width="auto" height="auto" class="w-4 h-4">
+  </button>
+
+  <!-- Dropdown Menu -->
+  <ul class="dropdown-menu absolute top-full left-0 w-full bg-gray-800 text-white bg-secondary rounded-md shadow-md hidden">
+    {% for option in option_lists %}
+      <li class="dropdown-item p-3 hover:bg-primary/50 cursor-pointer" data-value="{{ option }}">
+        {{ option }}
+      </li>
+    {% endfor %}
+  </ul>
+
+  <!-- Hidden Input Field (For Form Submission) -->
+  <input type="hidden" name="{{ name }}" value="{{ selected_value }}">
+
+  <!-- Error Message -->
+  {% if error %}
+    {% render 'tooltip', tooltip: error, isMandatory: true, isError: true %}
+  {% endif %}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.dropdown').forEach((dropdown) => {
+      const toggle = dropdown.querySelector('.dropdown-toggle');
+      const menu = dropdown.querySelector('.dropdown-menu');
+      const items = dropdown.querySelectorAll('.dropdown-item');
+      const inputField = dropdown.querySelector('input[name="{{ name }}"]');
+
+      // Toggle Dropdown
+      toggle.addEventListener('click', () => {
+        console.log(menu, toggle);
+        menu.classList.toggle('hidden');
+      });
+
+      // Select Item
+      items.forEach((item) => {
+        item.addEventListener('click', (e) => {
+          toggle.querySelector('span').textContent = e.target.textContent; // Update button text
+          inputField.value = e.target.getAttribute('data-value'); // Update hidden input
+          menu.classList.add('hidden'); // Hide dropdown
+        });
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target)) {
+          menu.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>

@@ -1,0 +1,18 @@
+{% comment %}
+  Snippet: Custom Button
+  Usage Example:
+  {% render 'custom-button', text: 'Submit', icon: 'send-icon.svg', onclick: "alert('Button Clicked!')" %}
+{% endcomment %}
+
+<button
+  type="submit"
+  class="mt-6 mx-auto w-full md:w-1/2 flex items-center justify-center gap-2 bg-primary text-white py-3 rounded-full shadow-md transition duration-500 hover:bg-secondary {% if disabled %}opacity-50 cursor-not-allowed{% endif %}"
+  {% if onclick %}
+    onclick="{{ onclick }}"
+  {% endif %}
+>
+  {% if icon %}
+    <img src="{{ icon | asset_url }}" width="auto" height="auto" alt="Button Icon" class="w-5">
+  {% endif %}
+  {{ text | default: 'Click Me' }}
+</button>

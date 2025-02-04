@@ -1,0 +1,64 @@
+<nav class="fixed w-full bg-gradient-to-b from-[#194d44] to-[#194d4455] text-white p-4 z-50">
+  <div class="max-w-6xl mx-auto flex justify-between items-center px-4">
+    <!-- Logo -->
+    <div class="w-32">
+      <a href="{{ routes.root_url }}">
+        <img src="{{ 'logo.png' | asset_url }}" height="auto" width="auto" alt="Logo" class="w-full min-w-50 h-auto">
+      </a>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="hidden md:flex items-center gap-6">
+      <ul class="flex gap-6 list-none">
+        {% for list in linklists['main-menu'].links %}
+          <li>
+            <a
+              href="{{ list.links }}"
+              class="text-white text-base font-normal hover:underline transition"
+            >
+              {{- list.title -}}
+            </a>
+          </li>
+        {% endfor %}
+        <li class="hidden md:block">|</li>
+      </ul>
+
+      <!-- Call for Consult -->
+      <div>
+        <a href="tel:1234567890" class="font-bold text-white text-base whitespace-nowrap">
+          CALL NOW FOR A CONSULT <span class="text-primary ml-2">123.456.7890</span>
+        </a>
+      </div>
+    </div>
+    <div class="md:hidden cursor-pointer" id="navbarToggle">
+      <img src="{{ 'hamburger.png' | asset_url }}" height="auto" width="auto" class="w-6 h-auto">
+    </div>
+  </div>
+
+  <div
+    class="hidden absolute left-0 right-0 pt-1 mt-1 flex flex-col gap-4 text-center bg-[#194d44] p-4 md:hidden"
+    id="collapsibleDiv"
+  >
+    {% for list in linklists['main-menu'].links %}
+      <a
+        href="{{ list.root_url }}"
+        class="text-white text-base font-normal hover:underline hover:font-bold transition"
+      >
+        {{- list.title -}}
+      </a>
+    {% endfor %}
+    <a href="tel:1234567890" class="font-bold text-white text-base">
+      CALL NOW FOR A CONSULT <span class="text-primary">123.456.7890</span>
+    </a>
+  </div>
+</nav>
+
+<script>
+  const navbarToggle = document.getElementById('navbarToggle');
+  const collapsibleDiv = document.getElementById('collapsibleDiv');
+
+  navbarToggle.addEventListener('click', () => {
+    collapsibleDiv.classList.toggle('hidden');
+    collapsibleDiv.classList.toggle('active');
+  });
+</script>
