@@ -1,0 +1,25 @@
+[
+    {
+      "name": "Theme Settings",
+      "settings": [
+        {
+          "type": "text",
+          "id": "store_name",
+          "label": "Store Name",
+          "default": "My Shopify Store"
+        },
+        {
+          "type": "color",
+          "id": "primary_color",
+          "label": "Primary Color",
+          "default": "#ff6600"
+        },
+        {
+          "type": "font_picker",
+          "id": "font",
+          "label": "Font",
+          "default": "sans-serif"
+        }
+      ]
+    }
+]
