@@ -13,13 +13,19 @@
     value="{{ value | escape }}"
     placeholder=""
     required="{{ isRequired }}"
-    class="peer w-full p-3 md:p-4 text-white bg-white/20 border {% if error %}border-red-500{% else %}border-gray-300{% endif %} rounded-md outline-none transition-all focus:border-white focus:bg-transparent"
+    class="peer w-full p-3 md:p-4 text-white bg-transparent border {% if error %}border-red-500{% else %}border-gray-300{% endif %} rounded-md outline-none transition-all border-white placeholder-shown:bg-white/20"
   >
 
   <!-- Label -->
   <label
     for="{{ name }}"
-    class="absolute cursor-pointer left-3 text-gray-400 text-base transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:left-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-white peer-focus:-top-2 peer-focus:left-3 peer-focus:text-xs peer-focus:text-white peer-focus:bg-secondary px-1"
+    class="
+      absolute cursor-pointer left-3 text-gray-400 text-base transition-all
+      peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-white
+      peer-focus:-top-2 peer-focus:text-xs peer-focus:text-white peer-focus:bg-secondary
+      peer-not-placeholder-shown:-top-2 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-white peer-not-placeholder-shown:bg-secondary
+      px-1
+    "
   >
     {{ label }}
   </label>

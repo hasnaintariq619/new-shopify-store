@@ -6,7 +6,7 @@
 
 <button
   type="{{ type }}"
-  class="cursor-pointer mt-6 mx-auto w-full md:w-1/2 flex items-center justify-center gap-2 bg-primary text-white py-3 rounded-full shadow-md transition duration-500 hover:bg-secondary {% if disabled %}opacity-50 cursor-not-allowed{% endif %}"
+  class="cursor-pointer mt-6 w-full md:w-1/2 flex items-center justify-center gap-2 bg-primary text-white py-3 rounded-md shadow-md transition duration-500 hover:bg-secondary {% if disabled %}opacity-50 cursor-not-allowed{% endif %}"
   {% if onclick %}
     onclick="{{ onclick }}"
   {% endif %}
