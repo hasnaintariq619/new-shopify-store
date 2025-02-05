@@ -4,18 +4,19 @@
 {% endcomment %}
 
 {% assign option_lists = options | split: '|' %}
-<div class="relative w-full dropdown">
+
+<div class="relative w-full dropdown ">
   <!-- Button for dropdown -->
   <button
     type="button"
-    class="dropdown-toggle cursor-pointer w-full p-4 text-left text-white bg-white/20 border {% if error %} border-red-500 {% else %} border-gray-300 {% endif %} rounded-md outline-none transition-all hover:border-white focus:border-white flex justify-between items-center"
+    class="dropdown-toggle cursor-pointer w-full p-3 md:p-4 text-left text-white bg-white/20 border {% if error %} border-red-500 {% else %} border-gray-300 {% endif %} rounded-md outline-none transition-all hover:border-white focus:border-white flex justify-between items-center"
   >
     <span>{{ selected_value | default: label }}</span>
     <img src="{{ 'chevron-down.svg' | asset_url }}" width="auto" height="auto" class="w-4 h-4">
   </button>
 
   <!-- Dropdown Menu -->
-  <ul class="dropdown-menu absolute top-full left-0 w-full bg-gray-800 text-white bg-secondary rounded-md shadow-md hidden">
+  <ul class="max-h-60 overflow-y-scroll dropdown-menu absolute top-full left-0 w-full bg-gray-800 text-white bg-secondary border-1 border-gray-300 rounded-bl-sm rounded-br-md shadow-md hidden z-9999">
     {% for option in option_lists %}
       <li class="dropdown-item p-3 hover:bg-primary/50 cursor-pointer" data-value="{{ option }}">
         {{ option }}

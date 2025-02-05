@@ -1,0 +1,219 @@
+{%- assign dropdown_source = section.settings.dropdown_source -%}
+{%- assign country_list = '' -%}
+
+{%- if dropdown_source != 'localization' -%}
+  {%- assign country_list = section.settings.dropdown_options -%}
+{%- else -%}
+  {%- assign country_list = localization.available_countries | map: 'name' | join: '|' -%}
+{%- endif -%}
+
+<header
+  class="relative flex justify-center items-center min-h-screen h-full w-full bg-cover bg-center pt-16 mb-4"
+  style="background-image: url('{{ section.settings.header_bg_image | asset_url }}');"
+>
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+      <!-- Left Content -->
+      <div>
+        <div class="text-xl text-center md:text-left">
+          <div class="font-extrabold uppercase leading-12">
+            <span class="outline-text outline-white text-[2rem] md:text-[3.5rem] lg:text-[4.5rem]">
+              {{- section.settings.main_heading_outline -}}
+            </span>
+            <br>
+            <span class="text-white text-[1.8rem] md:text-[3rem] lg:text-[4rem]">
+              {{- section.settings.main_heading -}}
+            </span>
+          </div>
+        </div>
+        <p class="text-white mt-4 text-sm md:text-md">
+          {{ section.settings.sub_heading }}
+        </p>
+      </div>
+
+      <!-- Right Content - Contact Form -->
+      <div class="mb-[5rem] md:mb-0">
+        {{ form.errors.email.message }}
+        {% form 'contact' %}
+          {% if form.posted_successfully %}
+            <div class="fixed top-10 right-10 bg-secondary z-9999 px-4 py-2 text-sm text-white">
+              Form has been submitted successfully!!
+            </div>
+          {% endif %}
+          <div
+            class="form-container mx-auto max-w-lg p-8 md:py-16 rounded-lg bg-gradient-to-b from-[#2a7d6c] to-[#3e69609e] shadow-lg text-center"
+          >
+            <h1 class="text-[1.3rem] md:text-[2rem] text-white font-semibold mb-4">Contact Us</h1>
+            <div class="grid gap-4 mt-4" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+              {% for block in section.blocks %}
+                {% case block.type %}
+                  {% when 'text_input' %}
+                    {% render 'custom-text-field',
+                      type: 'text',
+                      name: 'contact[{{block.settings.input_name}}]',
+                      label: block.settings.input_label,
+                      isRequired: block.settings.is_required,
+                      value: form[block.settings.input_name],
+                      placeholder: block.settings.input_placeholder,
+                      error: form.errors.messages[block.settings.input_name]
+                    %}
+
+                  {% when 'email' %}
+                    {% render 'custom-text-field',
+                      type: 'email',
+                      name: 'contact[email]',
+                      label: block.settings.email_label,
+                      isRequired: true,
+                      value: form.email,
+                      placeholder: block.settings.email_placeholder,
+                      error: form.errors.messages.email
+                    %}
+
+                  {% when 'dropdown' %}
+                    {% render 'custom-dropdown',
+                      name: 'contact[{{block.settings.dropdown_name}}]',
+                      label: block.settings.dropdown_label,
+                      options: country_list,
+                      error: form.errors.messages[block.settings.dropdown_name]
+                    %}
+                {% endcase %}
+              {% endfor %}
+            </div>
+            {% render 'button', text: section.settings.form_button_text, type: 'submit', icon: 'send-icon.svg' %}
+          </div>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Decorative Curves -->
+  <div class="absolute -bottom-2 left-0 w-full z-10">
+    <img src="{{ 'curve2.png' | asset_url }}" width="100%" height="auto" alt="" class="w-full h-24 object-cover">
+  </div>
+  <div class="absolute -bottom-2 left-0 w-full z-0">
+    <img src="{{ 'curve1.png' | asset_url }}" width="100%" height="auto" alt="" class="w-full h-28 object-cover">
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Header Background Image",
+      "id": "header_bg_image",
+      "default": "header-bg.png"
+    },
+    {
+      "type": "text",
+      "label": "Main Outline Heading",
+      "id": "main_heading_outline",
+      "default": "Get an"
+    },
+    {
+      "type": "text",
+      "label": "Main Heading 2",
+      "id": "main_heading",
+      "default": "Intervention"
+    },
+    {
+      "type": "text",
+      "label": "Sub Heading",
+      "id": "sub_heading",
+      "default": "Showing greater respect to older adults can be done in several ways: acknowledging and putting to use the talents and skills of older adults; creating intergenerational initiatives; and allowing older adults to stay active and independent for as long as possible."
+    },
+    {
+      "type": "text",
+      "label": "Button Text",
+      "id": "form_button_text",
+      "default": "Submit"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_input",
+      "name": "Text Input",
+      "settings": [
+        {
+          "type": "text",
+          "id": "input_label",
+          "label": "First Name",
+          "placeholder": "First Name",
+          "default": "Your Name"
+        },
+        {
+          "type": "text",
+          "id": "input_name",
+          "label": "Input Name (for form submission)",
+          "default": "first_name"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_required",
+          "label": "Required Field",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "email",
+      "name": "Email Field",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "email_label",
+          "label": "Email Label",
+          "default": "Your Email"
+        },
+        {
+          "type": "text",
+          "id": "email_name",
+          "label": "Input Name (for form submission)",
+          "default": "email"
+        }
+      ]
+    },
+    {
+      "type": "dropdown",
+      "name": "Dropdown Field",
+      "settings": [
+        {
+          "type": "text",
+          "id": "dropdown_name",
+          "label": "Dropdown Name",
+          "default": "country"
+        },
+        {
+          "type": "text",
+          "id": "dropdown_label",
+          "label": "Dropdown Label",
+          "default": "Select a Country"
+        },
+        {
+          "type": "textarea",
+          "id": "dropdown_options",
+          "label": "Dropdown Options ( | -separated)",
+          "default": "USA|Canada|UK|Australia"
+        },
+        {
+          "type": "select",
+          "id": "dropdown_source",
+          "label": "Dropdown Source",
+          "options": [
+            { "value": "localization", "label": "Localization Countries" },
+            { "value": "custom", "label": "Custom List" }
+          ],
+          "default": "localization"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header"
+    }
+  ]
+}
+{% endschema %}

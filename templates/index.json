@@ -1,0 +1,17 @@
+{
+  "name": "homepage",
+  "sections": {
+    "navbar": {
+      "type": "navbar",
+      "limit": 1
+
+    },
+    "header": {
+      "type": "header"
+    },
+    "footer": {
+      "type": "footer"
+    },
+  },
+  "order": ["navbar", "header", "footer"]
+}

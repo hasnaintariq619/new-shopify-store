@@ -1,0 +1,40 @@
+<footer class="p-4 bg-white min-h-14 h-full w-full flex items-center justify-around flex-col md:flex-row text-sm">
+  <div>
+    @{{ 'now' | date: '%Y' }}
+    {{ section.settings.footer_text }}
+  </div>
+  <ul class="flex gap-6 list-none">
+    {% for footer_link in linklists[section.settings.footer_menu].links %}
+      <li>
+        <a href="{{ footer_link.link }}" class="color-[#757575] hover:color-[#757578]">
+          {{ footer_link.title }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "footer_text",
+      "label": "Footer text",
+      "default": "Get an Intervention Inc. All rights reserved."
+    },
+    {
+      "type": "link_list",
+      "id": "footer_menu",
+      "label": "Select Navigation Menu",
+      "default": "footer"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer"
+    }
+  ]
+}
+{% endschema %}

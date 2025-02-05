@@ -15,8 +15,6 @@
     {{ 'style.css' | asset_url | stylesheet_tag }}
   </head>
   <body>
-    {% render 'navbar' %}
     {{ content_for_layout }}
-    {% render 'footer' %}
   </body>
 </html>

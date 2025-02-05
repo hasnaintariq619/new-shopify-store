@@ -1,26 +1,31 @@
 {% comment %}
   Snippet: Custom Input Field
   Usage:
-  {% render 'custom-input', type: 'text', name: 'first_name', label: 'First Name', value: form.first_name, placeholder: 'Enter your first name', error: form.errors.first_name %}
+  {% render 'custom-input', type: 'text', name: 'first_name', label: 'First Name', value: form.first_name, placeholder: 'Enter your first name', error: form.errors.first_name, isRequired: true %}
 {% endcomment %}
 
 <div class="relative group w-full">
   <!-- Input Field -->
   <input
+    id="{{ name }}"
     type="{{ type | default: 'text' }}"
     name="{{ name }}"
     value="{{ value | escape }}"
-    placeholder=" "
-    class="peer w-full p-4 text-white bg-white/20 border {% if error %}border-red-500{% else %}border-gray-300{% endif %} rounded-md outline-none transition-all focus:border-white focus:bg-transparent"
+    placeholder=""
+    required="{{ isRequired }}"
+    class="peer w-full p-3 md:p-4 text-white bg-white/20 border {% if error %}border-red-500{% else %}border-gray-300{% endif %} rounded-md outline-none transition-all focus:border-white focus:bg-transparent"
   >
 
   <!-- Label -->
-  <label class="absolute top-4 left-4 text-gray-400 text-base transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:left-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-white peer-focus:-top-2 peer-focus:left-3 peer-focus:text-xs peer-focus:text-white peer-focus:bg-secondary px-1">
+  <label
+    for="{{ name }}"
+    class="absolute cursor-pointer left-3 text-gray-400 text-base transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:left-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-white peer-focus:-top-2 peer-focus:left-3 peer-focus:text-xs peer-focus:text-white peer-focus:bg-secondary px-1"
+  >
     {{ label }}
   </label>
 
   <!-- Error Message -->
   {% if error %}
-    {% render 'tooltip', tooltip: 'Error', isMandatory: true, isError: true %}
+    {% render 'tooltip', tooltip: error, isMandatory: true, isError: true %}
   {% endif %}
 </div>
